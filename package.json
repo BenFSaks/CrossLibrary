@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  },
+  "name": "crosslib",
+  "description": "---\r ### Tools Used For This Project \r **TailWindCSS**\r **NodeJS, Express, Bcrypt, Passport**\r **MySql**",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "devStart": "nodemon app.js",
+    "build:css": "tailwindcss build -i src/styles.css -o public/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenFSaks/CrossLibrary.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenFSaks/CrossLibrary/issues"
+  },
+  "homepage": "https://github.com/BenFSaks/CrossLibrary#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.0.22"
+  }
+}
