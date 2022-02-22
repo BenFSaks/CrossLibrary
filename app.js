@@ -18,7 +18,10 @@ app.get('/login', (req,res)=>{
 app.get('/', (req,res)=>{
   res.redirect('/signup')
 })
+app.get('/shelf', (req,res) =>{
+  res.render("shelf.ejs")
+})
 
 
 app.listen(3001)
-console.log("localhost:3001")
+console.log("http://www.localhost:3001")
