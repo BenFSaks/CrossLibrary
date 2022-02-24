@@ -10,13 +10,35 @@
     <title>Document</title>
 </head>
 <body class="bg-cyan-200">
-    <nav class="flex bg-yellow-200 mt-3">
+    <nav class="flex bg-yellow-200">
         <h1>Home</h1>
-        <h1>Home</h2>
     </nav>   
     <div>
-        <h1>Hello World!</h1>
-    </div> 
+        <div class="grid grid-cols-4">
+            <div class="bg-green-400 col-span-1 h-96">
+                <a href="">Add Book</a>
+            
+            </div>
+            <div class="bg-red-400 col-span-3">
+                <h1 class="text-center font-serif font-bold text-6xl">The Shelf</h1>
+                <div class="bg-yellow-800 mx-auto  border-2 flex">
+                    <div class="book p-2 hover:bg-blue-300">
+                        <img class="w-36 min-w-sm" src="../img/georgeorwell1984.png" alt="">
+                        <h1 class="font-sans text-white">George Orwell 1984</h1>
+                    </div>
+
+                    <a href="/login"><div class="book p-2 hover:bg-blue-300 w-fit" onclick="/login">
+                        <img class="w-36 min-w-sm" src="../img/harrypottersorcstonejkrowling.jpg" alt="">
+                        <h1 class="font-sans text-white">Jk Rowling HP</h1>
+                    </div></a>
+                    
+                </div>
+                <div>
+                    <p>Hey</p>
+                </div>
+            </div>
+        </div> 
+    </div>
     
 </body>
 </html>

@@ -14,12 +14,12 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   saveUninitialized: true,
   resave: false,
-  store: sessionStorage,
   cookie: { maxAge: 1000 * 60 * 60 * 24 } //Set the expiration time of the cookie
 }))
 
 
 var db = require('./config/database.js')
+const { MemoryStore } = require('express-session')
  
 db.connect((err) =>{
   if(err) throw err
@@ -64,8 +64,4 @@ app.get('/shelf', (req,res) =>{
 
 
 app.listen(3001)
-<<<<<<< Updated upstream
 console.log("http://www.localhost:3001")
-=======
-console.log("http://www.localhost:3001/")
->>>>>>> Stashed changes
