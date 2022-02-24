@@ -1,8 +1,12 @@
 {
   "dependencies": {
+    "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
-    "nodemon": "^2.0.15"
+    "express-session": "^1.17.2",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15",
+    "passport": "^0.5.2"
   },
   "name": "crosslib",
   "description": "---\r ### Tools Used For This Project \r **TailWindCSS**\r **NodeJS, Express, Bcrypt, Passport**\r **MySql**",

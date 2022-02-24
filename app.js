@@ -1,12 +1,52 @@
 const express = require('express')
-const req = require('express/lib/request')
+
+
 const path = require('path')
+var passport = require('passport')
+const session = require('express-session')
 var app = express()
 
 app.set('views', path.join(__dirname, '/public/views'))
 app.use(express.static(path.join(__dirname, 'public')))
+// Session Storage
+if(process.env.NODE_ENV !== 'production') require('dotenv').config() 
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  saveUninitialized: true,
+  resave: false,
+  store: sessionStorage,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 } //Set the expiration time of the cookie
+}))
+
+
+var db = require('./config/database.js')
+ 
+db.connect((err) =>{
+  if(err) throw err
+  console.log('My Sql connected...')
+})
+
+
+
+
+app.get('/createtable', (req,res) =>{
+  let sql = 'CREATE TABLE users(id int AUTO_INCREMENT, username VARCHAR(255), firstName VARCHAR(225), lastName VARCHAR(225), hashedPassword VARCHAR(225), PRIMARY KEY (id))'
+  db.query(sql, (err,result) =>{
+    if(err) throw err
+    console.log(result)
+    res.send('Database created table')
+  })
+})
+app.get('/droptable',(req,res) =>{
+  let sql = "DROP TABLE users"
+  db.query(sql, (err,result) =>{
+    if (err) throw err
+    res.send('Database dropped table')
+  })
+})
+
+
 app.get('/signup', (req,res)=>{
-  
   res.render("signup.ejs",{
     name: 'Ben'
   })
@@ -24,4 +64,8 @@ app.get('/shelf', (req,res) =>{
 
 
 app.listen(3001)
+<<<<<<< Updated upstream
 console.log("http://www.localhost:3001")
+=======
+console.log("http://www.localhost:3001/")
+>>>>>>> Stashed changes
