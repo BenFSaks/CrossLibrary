@@ -19,7 +19,6 @@ app.use(session({
 
 
 var db = require('./config/database.js')
-const { MemoryStore } = require('express-session')
  
 db.connect((err) =>{
   if(err) throw err

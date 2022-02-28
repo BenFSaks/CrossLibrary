@@ -7,7 +7,8 @@
     
     <script type="text/javascript" src="https://livejs.com/live.js"></script>
     <link rel="stylesheet" href="../styles/style.css">
-    <title>Document</title>
+    <script src="../scripts/addBook.js"></script>
+    <title>The Shelf</title>
 </head>
 <body class="bg-cyan-200">
     <nav class="flex bg-yellow-200">
@@ -16,7 +17,11 @@
     <div>
         <div class="grid grid-cols-4">
             <div class="bg-green-400 col-span-1 h-96">
-                <a href="">Add Book</a>
+                <p href="" onclick="adder()" class="text-center text-white font-extrabold text-3xl" >Add A Book</p>
+                <div class="bg-white  flex flex-col text-center" id="addBook">
+                    <p>Add Book</p>
+                    <input class="mx-auto border-4 my-3 px-5 text-center " type="text" placeholder="Diary of the Wimpy">
+                </div>
             
             </div>
             <div class="bg-red-400 col-span-3">
