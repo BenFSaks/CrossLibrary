@@ -19,11 +19,11 @@ app.use(session({
 
 
 var db = require('./config/database.js')
- 
+/* 
 db.connect((err) =>{
   if(err) throw err
   console.log('My Sql connected...')
-})
+})*/
 
 
 
