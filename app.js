@@ -62,5 +62,5 @@ app.get('/shelf', (req,res) =>{
 })
 
 
-app.listen(3001)
+app.listen(3000)
 console.log("http://www.localhost:3001")

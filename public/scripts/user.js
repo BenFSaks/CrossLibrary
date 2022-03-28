@@ -4,7 +4,7 @@ class User{
         this.userId = Math.random().toString(16).slice(2)
         this.userFirstName = firstName
         this.userLastName = LastName
-        this.UserBooks = {}
+        this.UserBooks = []
     }
     //Getters 
     getUserBooks(){
