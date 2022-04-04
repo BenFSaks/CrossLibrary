@@ -1,6 +1,6 @@
 const path = require('path')
-class User{
-    constructor(id, firstName, LastName){
+export class User{
+    constructor(firstName, LastName){
         this.userId = Math.random().toString(16).slice(2)
         this.userFirstName = firstName
         this.userLastName = LastName
@@ -36,4 +36,3 @@ let user = new User( 'Ben', 'Saks')
 user.addUserBook("C++ and Assembly", __dirname)
 user.addUserBook("C", "wow")
 //user.removeUserBook("C")
-console.log(user)

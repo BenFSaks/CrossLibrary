@@ -7,28 +7,25 @@
     <title>CrossLib</title>
     <script type="text/javascript" src="https://livejs.com/live.js"></script>
     <link rel="stylesheet" href="../styles/style.css">
+    <script src="../scripts/navBar.js"></script>
+    <script src="../scripts/readSignup.js"></script>
 </head>
 <body class="text-gray-200 bg-cyan-200">
-    <nav class="flex bg-yellow-200">
-        <p class=" text-black ml-5 text-2xl font-mono hover:bg-red-200">
-            <a href="/">CrossLib</a>
-        </p>
-        <h1 class="text-cyan-300 ml-5 font-mono text-center text-2xl"><%=name%>'s Cross Library</h1>   
-    </nav>    
+    <main-header></main-header>
     <div class="mx-auto mt-5 font-mono max-w-xl" id="SignUp">
-        <form action="s" method="post" class="bg-yellow-800 border-8 border-yellow-200 flex items-center flex-col">
+        <form action="" method="" class="bg-yellow-800 border-8 border-yellow-200 flex items-center flex-col">
             <h1 class="font-bold text-center">Sign Up</h1>
             <hr class="w-32">
             <div class="py-5 flex space-y-3 flex-col">
                 <p class="font-semibold">First Name</p>
-                <input type="text" placeholder="John" class="text-black">
+                <input type="text" id="firstName" placeholder="John" class="text-black">
                 <p>Last Name</p>
                 <input type="text" placeholder="Smith" class="text-black">
                 <p class="">Email</p>
-                <input type="text" name="" id="" placeholder="donnyp@gmail.com" class="text-black inline-block">
+                <input type="text" name="" id="lastName" placeholder="donnyp@gmail.com" class="text-black inline-block">
                 <p>Password</p>
                 <input type="password" name="" id="" class="text-black"placeholder="Keep *******">
-                <input type="submit" value="Sign Up" class="rounded hover:bg-blue-500 w-20 inline-block bg-rose-800">
+                <input type="submit" id="btn-signup" value="Sign Up" class="rounded hover:bg-blue-500 w-20 inline-block bg-rose-800">
             </div>
         </form>
         <a href="/login" class="bg-yellow-700 text-black hover:bg-green-200">Login</a>
