@@ -7,13 +7,13 @@
     
     <script type="text/javascript" src="https://livejs.com/live.js"></script>
     <link rel="stylesheet" href="../styles/style.css">
-    <script src="../scripts/addBook.js"></script>
+    <script src="../scripts/addBook.js" defer></script>
     <title>The Shelf</title>
+    <script src="../scripts/navBar.js"></script>
+
 </head>
 <body class="bg-cyan-200">
-    <nav class="flex bg-yellow-200">
-        <h1>Home</h1>
-    </nav>   
+    <main-header></main-header>
     <div>
         <div class="grid grid-cols-4">
             <div class="bg-green-400 col-span-1 h-96 hidden">
@@ -21,17 +21,7 @@
             </div>
             <div class="bg-red-400 col-span-4">
                 <h1 class="text-center font-serif font-bold text-6xl">The Shelf</h1>
-                <div class="bg-yellow-800 mx-auto  border-2 flex">
-                    <div class="book p-2 hover:bg-blue-300">
-                        <img class="w-36 h-52" src="../img/georgeorwell1984.png" alt="">
-                        <h1 class="font-sans text-white">George Orwell 1984</h1>
-                    </div>
-
-                    <a href="/login"><div class="book p-2 hover:bg-blue-300 w-fit" onclick="/login">
-                        <img class="w-36 h-52" src="../img/harrypottersorcstonejkrowling.jpg" alt="">
-                        <h1 class="font-sans text-white">Jk Rowling HP</h1>
-                    </div></a>
-                    
+                <div id="shelf" class="bg-yellow-800 mx-auto  border-2 flex flex-wrap">
                 </div>
                 <div>
                     <p>Hey</p>
