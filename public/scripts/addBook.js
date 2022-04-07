@@ -1,7 +1,7 @@
 class Book{
     constructor(coverFile, coverName){
         this.innerHTML = `
-        <div class="cursor-pointer p-2 hover:bg-blue-900">
+        <div class="book cursor-pointer p-2 hover:bg-blue-900">
             <img class="w-36 h-52" src="${coverFile}" alt="">
             <h1 class="font-sans text-white text-center">${coverName}</h1>
         </div>
@@ -27,6 +27,17 @@ bookList.forEach(element => {
     let book = new Book(element.coverFile,element.title)
     shelf.innerHTML += book.innerHTML
 })
+let bookEle = document.getElementsByClassName("book")
+for (var i = 0, len = bookEle.length; i < len; i++) {
+    bookEle[i].addEventListener('click', readBook)
+}
+
+function readBook(){
+    console.log("Hye")
+    location.href = 'newPage.html'
+}
+
+
 // Add a book, button
 shelf.innerHTML +=
 `
