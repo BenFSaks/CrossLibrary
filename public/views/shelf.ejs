@@ -16,15 +16,39 @@
     <main-header></main-header>
     <div>
         <div class="grid grid-cols-4">
-            <div class="bg-green-400 col-span-1 h-96 hidden">
-            
-            </div>
             <div class="bg-red-400 col-span-4">
+                <div id="popUpMenu" class="bg-green-400 col-span-1 h-96 w-7/12 absolute left-0 right-0 m-auto hidden">
+                    <form action="" class="m-0">
+                        <div class="flex flex-col">
+                            <div class="flex items-center">
+                                <h1 class="text-center font-mono text-xl flex-auto">Add A Book </h1>
+                                <div id="menuClose" class="bg-blue-600 rounded-2xl m-2 hover:bg-blue-300 cursor-pointer"><span class="text-red-600 px-5">X</span></div>
+                            </div>
+                            <div class="flex flex-col bg-amber-400 w-72 right-0 left-0 m-auto">
+                                <p class="m-auto pt-2">
+                                    Book Title: 
+                                    <input type="text" name="" placeholder="Hunger Games" class="ml-0.5" id=""> 
+                                </p>
+                                <p class="m-auto pt-4">
+                                    Author:
+                                    <input type="text" name="" placeholder="The Pope" class="ml-0.5" id=""> 
+                                </p>
+                                <p class="m-auto pt-4">
+                                    Book Cover:
+                                    <input type="file" name="" class="ml-0.5" id=""> 
+                                </p>
+                                <p class="m-auto pt-4">
+                                    Book File(pdf):
+                                    <input type="file" name="" class="ml-0.5" id=""> 
+                                </p>
+                        </div>
+                            </div>
+                    </form>
+                </div>
                 <h1 class="text-center font-serif font-bold text-6xl">The Shelf</h1>
                 <div id="shelf" class="bg-yellow-800 mx-auto  border-2 flex flex-wrap">
                 </div>
                 <div>
-                    <p>Hey</p>
                 </div>
             </div>
         </div> 
