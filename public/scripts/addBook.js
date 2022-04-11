@@ -8,6 +8,7 @@ class Book{
         `
     }
 }
+//Sample Inputs bookList 
 let bookList = []
 bookList[0] = {
     coverFile: "../img/georgeorwell1984.png",
@@ -22,19 +23,21 @@ bookList[2] = {
     title: "John Green Turtles" //All The Way Down"
 }
 bookList[3] = bookList[1]
-var shelf = document.getElementById("shelf")
+let shelf = document.getElementById("shelf")
 bookList.forEach(element => {
     let book = new Book(element.coverFile,element.title)
     shelf.innerHTML += book.innerHTML
 })
-let bookEle = document.getElementsByClassName("book")
-for (var i = 0, len = bookEle.length; i < len; i++) {
-    bookEle[i].addEventListener('click', readBook)
+window.onload = () => {
+    let bookEle = document.getElementsByClassName("book")
+    for (var i = 0, len = bookEle.length; i < len; i++) {
+        bookEle[i].addEventListener('click', readBook)
+    }
 }
 
 function readBook(){
     console.log("Hye")
-    location.href = 'newPage.html'
+    location.href = 'login'
 }
 
 
@@ -57,3 +60,9 @@ document.getElementById("menuClose").addEventListener("click", closeMenu)
 function closeMenu(){
     menu.classList.add("hidden")
 }
+
+// Submitting a book 
+document.getElementById("btn-submitBook").addEventListener('click', (e) =>{
+    e.preventDefault();
+    closeMenu()
+})
