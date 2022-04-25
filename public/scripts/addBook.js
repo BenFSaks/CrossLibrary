@@ -8,7 +8,6 @@ class Book{
         `
     }
 }
-//Sample Inputs bookList 
 let bookList = []
 bookList[0] = {
     coverFile: "../img/georgeorwell1984.png",
@@ -23,7 +22,7 @@ bookList[2] = {
     title: "John Green Turtles" //All The Way Down"
 }
 bookList[3] = bookList[1]
-let shelf = document.getElementById("shelf")
+var shelf = document.getElementById("shelf")
 bookList.forEach(element => {
     let book = new Book(element.coverFile,element.title)
     shelf.innerHTML += book.innerHTML
@@ -37,7 +36,7 @@ window.onload = () => {
 
 function readBook(){
     console.log("Hye")
-    location.href = 'login'
+    location.href = 'login.html'
 }
 
 
@@ -63,6 +62,6 @@ function closeMenu(){
 
 // Submitting a book 
 document.getElementById("btn-submitBook").addEventListener('click', (e) =>{
-    e.preventDefault();
+    //e.preventDefault();
     closeMenu()
 })

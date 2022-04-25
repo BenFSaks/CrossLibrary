@@ -13,18 +13,18 @@
 <body class="text-gray-200 bg-cyan-200">
     <main-header></main-header>
     <div class="mx-auto mt-5 font-mono max-w-xl" id="SignUp">
-        <form action="" method="" class="bg-yellow-800 border-8 border-yellow-200 flex items-center flex-col">
+        <form action="/signup" method="post" class="bg-yellow-800 border-8 border-yellow-200 flex items-center flex-col">
             <h1 class="font-bold text-center">Sign Up</h1>
             <hr class="w-32">
             <div class="py-5 flex space-y-3 flex-col">
                 <p class="font-semibold">First Name</p>
-                <input type="text" id="firstName" placeholder="John" class="text-black">
+                <input type="text" id="firstName" placeholder="John" name="fname" class="text-black">
                 <p>Last Name</p>
-                <input type="text" id="lastName" placeholder="Smith" class="text-black">
+                <input type="text" id="lastName" placeholder="Smith" name="lname" class="text-black">
                 <p class="">Email</p>
-                <input type="text" name="" id="email" placeholder="donnyp@gmail.com" class="text-black inline-block">
+                <input type="text" id="email" placeholder="donnyp@gmail.com" name="email" class="text-black inline-block">
                 <p>Password</p>
-                <input type="password" name="" id="" class="text-black"placeholder="Keep *******">
+                <input type="password" name="" id="" class="text-black" name="password" placeholder="Keep *******">
                 <input type="submit" id="btn-signup" value="Sign Up" class="rounded hover:bg-blue-500 w-20 inline-block bg-rose-800">
             </div>
         </form>

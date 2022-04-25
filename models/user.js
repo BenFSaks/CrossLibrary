@@ -38,16 +38,20 @@ class User{
     
 }
 //Grab the signup submit button and create a user 
-document.getElementById("btn-signup").addEventListener('click', readUser)
-function readUser(e){
-    e.preventDefault()
-    const firstName = document.getElementById("firstName").value
-    const lastName = document.getElementById("lastName").value
-    const email = document.getElementById("email").value
-    const newUser = new User(firstName,lastName,email)
-    console.log(newUser)
-}
-let user = new User( 'Ben', 'Saks')
-user.addUserBook("C++ and Assembly", "Located <Here>")
-user.addUserBook("C", "wow")
+// document.getElementById("btn-signup").addEventListener('click', readUser)
+// function readUser(e){
+//     e.preventDefault()
+//     const firstName = document.getElementById("firstName").value
+//     const lastName = document.getElementById("lastName").value
+//     const email = document.getElementById("email").value
+//     const newUser = new User(firstName,lastName,email)
+//     console.log(newUser)
+// }
+// let user = new User( 'Ben', 'Saks')
+// user.addUserBook("C++ and Assembly", "Located <Here>")
+// user.addUserBook("C", "wow")
 //user.removeUserBook("C")
+module.exports.user = {
+    User: User
+}
+

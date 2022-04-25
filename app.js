@@ -1,10 +1,12 @@
 const express = require('express')
-
-
+const bodyParser = require('body-parser')
+const user = require('./models/user.js')
 const path = require('path')
 var passport = require('passport')
 const session = require('express-session')
 var app = express()
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json())
 
 app.set('views', path.join(__dirname, '/public/views'))
 app.use(express.static(path.join(__dirname, 'public')))
@@ -61,6 +63,19 @@ app.get('/shelf', (req,res) =>{
   res.render("shelf.ejs")
 })
 
+let userCreater = user.user.User
+app.post('/signup', (req,res) =>{
+  let user1 = new userCreater(req.body.fname, req.body.lname, req.body.email)
+  console.log(user1)
+
+})
+app.post('/shelf', (req,res) =>{
+  //console.log("hey wow")
+  console.log(user1)
+})
+app.get('/form', (req,res)=>{
+  res.render("form.ejs")
+})
 
 app.listen(3000)
 console.log("http://www.localhost:3000")
