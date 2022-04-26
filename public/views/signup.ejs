@@ -26,6 +26,9 @@
                 <p>Password</p>
                 <input type="password" name="" id="" class="text-black" name="password" placeholder="Keep *******">
                 <input type="submit" id="btn-signup" value="Sign Up" class="rounded hover:bg-blue-500 w-20 inline-block bg-rose-800">
+                <% if (error) { %>
+                    <p><%= error%></p>
+                <% } %>
             </div>
         </form>
         <a href="/login" class="bg-yellow-700 text-black hover:bg-green-200">Login</a>

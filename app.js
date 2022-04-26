@@ -5,6 +5,14 @@ const path = require('path')
 var passport = require('passport')
 const session = require('express-session')
 var app = express()
+
+
+const con = require('./backend/db_connection')
+
+
+
+
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 
@@ -12,21 +20,25 @@ app.set('views', path.join(__dirname, '/public/views'))
 app.use(express.static(path.join(__dirname, 'public')))
 // Session Storage
 if(process.env.NODE_ENV !== 'production') require('dotenv').config() 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  saveUninitialized: true,
-  resave: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 } //Set the expiration time of the cookie
-}))
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   saveUninitialized: true,
+//   resave: false,
+//   cookie: { maxAge: 1000 * 60 * 60 * 24 } //Set the expiration time of the cookie
+// }))
 
 
-var db = require('./config/database.js')
+const res = require('express/lib/response')
 /* 
 db.connect((err) =>{
   if(err) throw err
   console.log('My Sql connected...')
 })*/
 
+con.query("SELECT * FROM books", (err, result)=>{
+    if(err) throw err
+    console.log(result)
+})
 
 
 
@@ -45,11 +57,17 @@ app.get('/droptable',(req,res) =>{
     res.send('Database dropped table')
   })
 })
+app.get('/clearusertable', (req,res) =>{
+  con.query("DELETE FROM users",(err,result) =>{
+    if(err) throw err
+    res.send("User table cleared")
+  })
+})
 
 
 app.get('/signup', (req,res)=>{
   res.render("signup.ejs",{
-    name: 'Ben'
+    error: ''
   })
 })
 app.get('/login', (req,res)=>{
@@ -65,10 +83,27 @@ app.get('/shelf', (req,res) =>{
 
 let userCreater = user.user.User
 app.post('/signup', (req,res) =>{
-  let user1 = new userCreater(req.body.fname, req.body.lname, req.body.email)
-  console.log(user1)
+  //let user1 = new userCreater(req.body.fname, req.body.lname, req.body.email)
+  const checksql = `SELECT email FROM users WHERE email =?`
+  con.query(checksql,[req.body.email], (err,result) =>{
+    if(err) throw err
+    if(result.length === 0){
+      const sql = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${req.body.fname}','${req.body.lname}','${req.body.email}','password')`
+      con.query(sql, (err,result) =>{
+        if (err) throw err
+        console.log("Inserted User")
+      })
+    }else{
+      res.render("signup.ejs",{
+        error: "ERROR: Email in use"
+      })
+    }
+  })
+
 
 })
+
+
 app.post('/shelf', (req,res) =>{
   //console.log("hey wow")
   console.log(user1)
