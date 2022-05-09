@@ -93,6 +93,10 @@ app.post('/signup', (req,res) =>{
         if (err) throw err
         console.log("Inserted User")
       })
+      // res.render("shelf.ejs",{
+      //   user_email: ""
+      // })
+      // Window.localStorage.setItem('userEmail', req.body.email)
     }else{
       res.render("signup.ejs",{
         error: "ERROR: Email in use"

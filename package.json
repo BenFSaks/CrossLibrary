@@ -14,7 +14,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "devStart": "nodemon app.js && build:css",
+    "server": "nodemon app.js && build:css",
     "build:css": "tailwindcss build -i src/styles.css -o public/styles/style.css --watch"
   },
   "repository": {

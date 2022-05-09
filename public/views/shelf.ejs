@@ -14,6 +14,10 @@
 </head>
 <body class="bg-cyan-200">
     <main-header></main-header>
+
+    <% if (user_email) { %>
+        <p><%= user_email%></p>
+    <% } %>
     <div>
         <div class="grid grid-cols-4">
             <div class="bg-red-400 col-span-4">
