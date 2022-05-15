@@ -10,14 +10,12 @@
     <script src="../scripts/addBook.js" defer></script>
     <title>The Shelf</title>
     <script src="../scripts/navBar.js"></script>
+    <script src="../scripts/getUserShelf.js"></script>
 
 </head>
 <body class="bg-cyan-200">
     <main-header></main-header>
 
-    <% if (user_email) { %>
-        <p><%= user_email%></p>
-    <% } %>
     <div>
         <div class="grid grid-cols-4">
             <div class="bg-red-400 col-span-4">
@@ -50,8 +48,16 @@
                             </div>
                     </form>
                 </div>
-                <h1 class="text-center font-mono  text-6xl">The Shelf</h1>
-                <div id="shelf" class="bg-yellow-800 mx-auto  border-2 flex flex-wrap">
+            <h1 class="text-center font-mono  text-5xl">
+                    <%= name %>'s Shelf
+                </h1>
+                <div id="shelf" class="bg-yellow-800 mx-auto border-2 flex flex-wrap">
+                    <% books.forEach( (book) =>{ %>
+                        <div class="book cursor-pointer p-2 hover:bg-blue-900">
+                            <img class="w-36 h-52" src="../img/georgeorwell1984.png" alt="">
+                            <h1 class="font-sans text-white text-center"> <%= book.book_title %></h1>
+                        </div>
+                    <% }) %>
                 </div>
                 <div>
                 </div>

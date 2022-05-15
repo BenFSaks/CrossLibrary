@@ -1,16 +1,23 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const user = require('./models/user.js')
 const path = require('path')
 var passport = require('passport')
 const session = require('express-session')
+const bcrypt = require('bcrypt')
 var app = express()
+var MySQLStore = require('express-mysql-session')(session);
 
 
 const con = require('./backend/db_connection')
 
-
-
+var sessionStore = new MySQLStore({
+}/* session store options */, con);
+app.use(session({
+  secret: 'key that will sign cookie',
+  resave: false,
+  saveUninitialized: false,
+  store: sessionStore
+}))
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -18,22 +25,18 @@ app.use(bodyParser.json())
 
 app.set('views', path.join(__dirname, '/public/views'))
 app.use(express.static(path.join(__dirname, 'public')))
-// Session Storage
 if(process.env.NODE_ENV !== 'production') require('dotenv').config() 
-// app.use(session({
-//   secret: process.env.SESSION_SECRET,
-//   saveUninitialized: true,
-//   resave: false,
-//   cookie: { maxAge: 1000 * 60 * 60 * 24 } //Set the expiration time of the cookie
-// }))
 
 
-const res = require('express/lib/response')
-/* 
-db.connect((err) =>{
-  if(err) throw err
-  console.log('My Sql connected...')
-})*/
+
+const isAuth = (req, res, next) =>{
+  if(req.session.isAuth){
+    next()
+  }else{
+    res.redirect('/login')
+  }
+
+}
 
 con.query("SELECT * FROM books", (err, result)=>{
     if(err) throw err
@@ -73,30 +76,60 @@ app.get('/signup', (req,res)=>{
 app.get('/login', (req,res)=>{
   res.render("login.ejs")
 })
+app.post('/login', (req,res) =>{
+  const checksql = `SELECT * FROM users WHERE email =?`
+  let login_user;
+  con.query(checksql,[req.body.email], async (err,result) =>{
+    if(err) throw err
+    //If User Does not Exist
+    if(result.length === 0){
+      res.redirect('/login')
+    }else{
+      login_user = result[0]
+      const isMatch = await bcrypt.compare(req.body.password,login_user.password)
+      //Password Matches password in database
+      if (!isMatch) {
+        return res.redirect('/login')
+      } else {
+        req.session.isAuth = true
+        req.session.name = login_user.first_name
+        req.session.email = login_user.email
+        req.session.user_id = login_user.id
+        console.log(req.session.user_id)
+        res.redirect('/shelf')
+      }
+    }
+  })
+})
 
 app.get('/', (req,res)=>{
   res.redirect('/signup')
 })
-app.get('/shelf', (req,res) =>{
-  res.render("shelf.ejs")
+app.get('/shelf', isAuth, (req,res) =>{
+  const sql = `SELECT * FROM books WHERE user_id =?`
+  con.query(sql,[req.session.user_id], async (err,result) =>{
+    if(err) throw err
+    res.render("shelf.ejs",{
+      name: req.session.name,
+      books: result
+    })
+  })
 })
 
-let userCreater = user.user.User
-app.post('/signup', (req,res) =>{
-  //let user1 = new userCreater(req.body.fname, req.body.lname, req.body.email)
+app.post('/signup', async (req,res) =>{
+  const pass = req.body.password
+  const hashPass = await bcrypt.hash(pass, 12)
   const checksql = `SELECT email FROM users WHERE email =?`
   con.query(checksql,[req.body.email], (err,result) =>{
     if(err) throw err
+    //User Does not Exist
     if(result.length === 0){
-      const sql = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${req.body.fname}','${req.body.lname}','${req.body.email}','password')`
+      const sql = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${req.body.fname}','${req.body.lname}','${req.body.email}','${hashPass}')`
       con.query(sql, (err,result) =>{
         if (err) throw err
+        res.redirect('/login')
         console.log("Inserted User")
       })
-      // res.render("shelf.ejs",{
-      //   user_email: ""
-      // })
-      // Window.localStorage.setItem('userEmail', req.body.email)
     }else{
       res.render("signup.ejs",{
         error: "ERROR: Email in use"
@@ -110,7 +143,6 @@ app.post('/signup', (req,res) =>{
 
 app.post('/shelf', (req,res) =>{
   //console.log("hey wow")
-  console.log(user1)
 })
 app.get('/form', (req,res)=>{
   res.render("form.ejs")
