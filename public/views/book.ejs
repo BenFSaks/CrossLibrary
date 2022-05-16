@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Book</title>
+    <script src="../scripts/navBar.js"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+</head>
+<body>
+    <main-header></main-header>
+    <div class="">
+        <button class="" id="prev-page">Prev Page</button>
+    </div>
+    <div class="">
+        <button class="" id="next-page">Next Page</button>
+    </div>
+    <span class="">
+        Page <span id="page-num"></span> of <span id="page-count"></span>
+    </span>
+    <canvas id="pdf-render"></canvas>
+    <script defer>
+        const url = '../uploads/<%=book.book_location%>'
+        let pdfDoc = null,
+            pageNum = 1,
+            pageIsRendering = false
+            pageNumIsPending = null
+        const scale = 1.75,
+            canvas = document.querySelector("#pdf-render"),
+            ctx = canvas.getContext('2d')
+        const renderPage = num => {
+            pageIsRendering = true
+
+            pdfDoc.getPage(num).then(page =>{
+                const viewport = page.getViewport({ scale})
+                canvas.height = viewport.height
+                canvas.width = viewport.width
+                const renderCtx = {
+                    canvasContext: ctx,
+                    viewport
+                }
+                page.render(renderCtx).promise.then(() =>{
+                    pageIsRendering = false
+
+                    if(pageNumIsPending !== null){
+                        renderPage(pageNumIsPending)
+                        pageNumIsPending = null
+                    }
+                })
+
+                document.querySelector('#page-num').textContent = num
+            })
+        }
+        const queueRenderPage = num =>{
+            if(pageIsRendering){
+                pageNumIsPending = num
+            } else{
+                renderPage(num)
+            }
+        }
+        const showPrevPage = () => {
+            if(pageNum <= 1){
+                return
+            }
+            pageNum--
+            queueRenderPage(pageNum)
+        }
+        const showNextPage = () => {
+            if(pageNum >= pdfDoc.numPages){
+                return
+            }
+            pageNum++
+            queueRenderPage(pageNum)
+        }
+
+        pdfjsLib.getDocument(url).promise.then(pdfDoc_ =>{
+            pdfDoc = pdfDoc_
+            document.querySelector('#page-count').textContent = pdfDoc.numPages
+            renderPage(pageNum)
+        })
+        //Button Events
+        document.querySelector('#prev-page').addEventListener('click', showPrevPage)
+        document.querySelector('#next-page').addEventListener('click', showNextPage)
+    </script>
+</body>
+</html>

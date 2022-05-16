@@ -472,6 +472,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   position: absolute;
 }
 
+.relative {
+  position: relative;
+}
+
 .left-0 {
   left: 0px;
 }
@@ -480,12 +484,28 @@ Ensure the default browser behavior of the `hidden` attribute.
   right: 0px;
 }
 
+.bottom-16 {
+  bottom: 4rem;
+}
+
+.right-2 {
+  right: 0.5rem;
+}
+
+.bottom-2 {
+  bottom: 0.5rem;
+}
+
 .col-span-4 {
   grid-column: span 4 / span 4;
 }
 
 .col-span-1 {
   grid-column: span 1 / span 1;
+}
+
+.float-right {
+  float: right;
 }
 
 .m-auto {
@@ -533,6 +553,22 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 0.5rem;
 }
 
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.mb-24 {
+  margin-bottom: 6rem;
+}
+
+.mb-14 {
+  margin-bottom: 3.5rem;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -557,6 +593,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 24rem;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
 .w-36 {
   width: 9rem;
 }
@@ -579,6 +619,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-44 {
   width: 11rem;
+}
+
+.w-10 {
+  width: 2.5rem;
 }
 
 .max-w-xl {
@@ -662,6 +706,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(254 240 138 / var(--tw-border-opacity));
 }
 
+.border-white {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -710,6 +759,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-orange-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(253 186 116 / var(--tw-bg-opacity));
+}
+
+.bg-green-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-r {
@@ -782,8 +836,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 1rem;
 }
 
+.pb-14 {
+  padding-bottom: 3.5rem;
+}
+
 .text-center {
   text-align: center;
+}
+
+.align-middle {
+  vertical-align: middle;
 }
 
 .font-sans {
@@ -807,16 +869,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-5xl {
   font-size: 3rem;
   line-height: 1;
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
 }
 
 .font-bold {

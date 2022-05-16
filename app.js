@@ -4,8 +4,15 @@ const path = require('path')
 var passport = require('passport')
 const session = require('express-session')
 const bcrypt = require('bcrypt')
+const multer = require('multer')
+
+const { Poppler } = require('node-poppler')
+
+const pdf = require('pdf-poppler')
+const pdfjs = require('pdfjs')
 var app = express()
 var MySQLStore = require('express-mysql-session')(session);
+const uuid = require('uuid').v4
 
 
 const con = require('./backend/db_connection')
@@ -37,11 +44,14 @@ const isAuth = (req, res, next) =>{
   }
 
 }
+const isNotAuth = (req, res, next) =>{
+  if(!req.session.isAuth){
+    next()
+  }else{
+    res.redirect('/shelf')
+  }
+}
 
-con.query("SELECT * FROM books", (err, result)=>{
-    if(err) throw err
-    console.log(result)
-})
 
 
 
@@ -68,12 +78,12 @@ app.get('/clearusertable', (req,res) =>{
 })
 
 
-app.get('/signup', (req,res)=>{
+app.get('/signup', isNotAuth, (req,res)=>{
   res.render("signup.ejs",{
     error: ''
   })
 })
-app.get('/login', (req,res)=>{
+app.get('/login', isNotAuth, (req,res)=>{
   res.render("login.ejs")
 })
 app.post('/login', (req,res) =>{
@@ -139,14 +149,96 @@ app.post('/signup', async (req,res) =>{
 
 
 })
+//PDF Storage 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/uploads')
+  },
+  filename: async (req, file, cb) => {
+    
+    const filename = `${uuid()}-${file.originalname}`
+    cb(null, filename)
+    const book_title = req.body.title
+    const book_author_fname = req.body.author_fname
+    const book_author_lname = req.body.author_lname
+    const book_cover = req.body.cover || "NULL" 
+    const book_path = path.join(__dirname, 'public','uploads', filename)
+    const book_user_id = req.session.user_id
+    //Take first image of pdf convert it to image
+
+    const poppler = new Poppler()
+    const options = {
+      firstPageToConvert: 1,
+      lastPageToConvert: 1,
+      pngFile: true
+    }
+    const uuid_cover = uuid()
+    const book_cover_path = path.join(__dirname, 'public', `img`, `${uuid_cover}`) 
+    const res = await poppler.pdfToCairo(book_path, book_cover_path, options)
+    console.log(res)
+    const ops = {
+      printAsJson: true
+    }
+    let ext 
+    const pdfInfo = await poppler.pdfInfo(book_path, ops)
+    console.log(pdfInfo.pages)
+    if (pdfInfo.pages < 10){
+      ext = "-1"
+    }
+    else if(pdfInfo.pages < 100){
+      ext = "-01"
+
+    }
+    else if(pdfInfo.pages < 1000){
+      ext = "-001"
+    }
+    else if(pdfInfo.pages < 10000){
+      ext = "-0001"
+    }
+    // const opts = {
+    // out_dir: path.join(__dirname, "public", "img"),
+    // out_prefix: book_cover_path,
+    // format: 'jpeg',
+    // page: 1,
+    // }
+    // pdf.convert(book_path, opts)
+    // .then(res =>{
+    //     console.log()
+    //   })
+    // .catch(err =>{
+    //   console.error(err)
+    // })
 
 
-app.post('/shelf', (req,res) =>{
-  //console.log("hey wow")
+    const sql = `INSERT INTO books (book_title, book_authorfname, book_authorlname, book_image, book_location, user_id) VALUES ('${book_title}', '${book_author_fname}','${book_author_lname}','${uuid_cover}${ext}.png', '${filename}', '${book_user_id}' )`
+    con.query(sql, (err,result) => {
+      if(err) throw err
+
+    })
+  }
+})
+const upload = multer({storage: storage})
+
+app.post('/shelf', upload.single('pdf'),(req,res) =>{
+  res.redirect('/shelf')
 })
 app.get('/form', (req,res)=>{
+  res.clearCookie("connect.sid")
   res.render("form.ejs")
 })
-
+app.get('/logout', (req,res)=>{
+  res.clearCookie("connect.sid")
+  res.redirect('/login')
+})
+app.get('/readbook/:id', (req,res) =>{
+  console.log(req.params.id)
+  let sql = `SELECT * FROM books WHERE book_id = ${req.params.id}`
+  con.query(sql, (err,result) =>{
+    if(err) throw err
+    console.log(result)
+    res.render('book.ejs',{
+      book: result[0]})
+  })
+})
 app.listen(3000)
 console.log("http://www.localhost:3000")

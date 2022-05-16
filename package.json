@@ -6,10 +6,15 @@
     "express": "^4.17.2",
     "express-mysql-session": "^2.1.8",
     "express-session": "^1.17.2",
+    "multer": "^1.4.4",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
+    "node-poppler": "^5.1.4",
     "nodemon": "^2.0.15",
-    "passport": "^0.5.2"
+    "passport": "^0.5.2",
+    "pdf-poppler": "^0.2.1",
+    "pdfjs": "^2.4.7",
+    "uuid": "^8.3.2"
   },
   "name": "crosslib",
   "description": "---\r ### Tools Used For This Project \r **TailWindCSS**\r **NodeJS, Express, Bcrypt, Passport**\r **MySql**",
