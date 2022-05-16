@@ -18,6 +18,7 @@ function closeMenu(){
     menu.classList.add("hidden")
 }
 
+
 // Submitting a book 
 document.getElementById("btn-submitBook").addEventListener('click', (e) =>{
     //e.preventDefault();

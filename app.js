@@ -5,7 +5,7 @@ var passport = require('passport')
 const session = require('express-session')
 const bcrypt = require('bcrypt')
 const multer = require('multer')
-
+const fs = require('fs')
 const { Poppler } = require('node-poppler')
 
 const pdf = require('pdf-poppler')
@@ -231,13 +231,26 @@ app.get('/logout', (req,res)=>{
   res.redirect('/login')
 })
 app.get('/readbook/:id', (req,res) =>{
-  console.log(req.params.id)
   let sql = `SELECT * FROM books WHERE book_id = ${req.params.id}`
   con.query(sql, (err,result) =>{
     if(err) throw err
-    console.log(result)
     res.render('book.ejs',{
       book: result[0]})
+  })
+})
+app.post('/deletebook/:id', (req,res) =>{
+  let retsql = `SELECT * FROM books WHERE book_id = ${req.params.id}`
+  con.query(retsql, (err,result) =>{
+    if(err) throw err
+    console.log(path.join(__dirname,"public", "uploads", result[0].book_location))
+    fs.unlink(path.join(__dirname,"public", "uploads", result[0].book_location), (err) =>{
+      if (err) throw err
+    })
+  })
+  let sql = `DELETE FROM books WHERE book_id = ${req.params.id}`
+  con.query(sql, (err,result) =>{
+    if(err) throw err
+    res.redirect('/shelf')
   })
 })
 app.listen(3000)

@@ -62,13 +62,18 @@
                 </h1>
                 <div id="shelf" class="bg-yellow-800 mx-auto border-2 flex flex-wrap">
                     <% books.forEach( (book) =>{ %>
-                        <form action="/readbook/<%= book.book_id %>" method="get">
-                            
-                            <div onclick="this.parentNode.submit()"class="book cursor-pointer p-2 hover:bg-blue-900">
-                                <img class="w-36 h-52" src="../img/<%=book.book_image%>" alt="">
-                                <h1 class="font-sans text-white text-center"> <%= book.book_title %></h1>
-                            </div>
-                        </form>
+                        <div class="group">
+                            <form action="/readbook/<%= book.book_id %>" method="get">
+                                
+                                <div onclick="this.parentNode.submit()"class="book cursor-pointer p-2 hover:bg-blue-900 hover:">
+                                    <img class="w-36 h-52 hover:peer" src="../img/<%=book.book_image%>" alt="">
+                                    <h1 class="font-sans text-white text-center"> <%= book.book_title %></h1>
+                                </div>
+                            </form>
+                            <form action="/deletebook/<%= book.book_id%>" method="post">
+                                <p onclick="this.parentNode.submit()" class="bg-red-400 text-center invisible group-hover:visible">x</p>
+                            </form>
+                        </div>
                     <% }) %>
                 </div>
                 <div>
@@ -86,16 +91,6 @@
             pdfjsLib.getDocument(file).promise.then((pdf) =>{
                 console.log(pdf.numPages)
             })
-            // filereader.onload = () =>{
-            //     var typedarray = new Uint8Array(this.result)
-            //     console.log(typedarray)
-            //     const task = pdfjsLib.getDocument(typedarray)
-
-            //     task.promise.then((pdf) =>{
-            //         console.log('hey '+ pdf.numPages)
-            //     })
-            // }
-            // filereader.readAsArrayBuffer(file)
         }
     </script>
 </body>
